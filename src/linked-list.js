@@ -3,20 +3,13 @@ const Node = require('./node');
 class LinkedList {
     constructor() {
       this.data;
-      this.next;
-      this.prev;
       this._head;
       this._tail;
       this.length = 0;
     }
 
     append(data) {
-      var current = {
-        data: data,
-        next: null,
-        prev: null,
-      }
-
+      var current = new Node(data);
       if (this.length == 0){
         this._head = this._tail = current;
         this._tail.next = this._head;
