@@ -10,17 +10,14 @@ class LinkedList {
 
     append(data) {
       var current = new Node(data);
-      if (this.length == 0){
+      if (this.length === 0){
         this._head = this._tail = current;
-        this._tail.next = this._head;
-        this._head.prev = this._tail;
       }
       else {
         this._tail.next = current;
         current.prev = this._tail;
         this._tail = current;
       }
-
       this.length++;
     }
 
@@ -53,11 +50,23 @@ class LinkedList {
     }
 
     isEmpty() {
-      if (this.length == 0) return true;
+      if (this.length === 0) return true;
       else return false;
     }
 
-    clear() {}
+    clear() {
+      if(this.length){
+        var current = this._head;
+        while (this.length != 1) {
+          current = this._head.next;
+          this._head = current;
+          this.length--;
+        }
+        this.length--;
+        this._head.data = null;
+        this._tail.data = null;
+      }
+    }
 
     deleteAt(index) {
       var current = this._head;
@@ -72,7 +81,22 @@ class LinkedList {
       this.length--;
     }
 
-    reverse() {}
+    reverse() {
+      var condition;
+      if (this.length % 2 === 0) condition = (this.length - 1) / 2;
+      else condition = Math.floor((this.length - 1) / 2)
+
+      var currentH = this._head;
+      var currentT = this._tail;
+
+      for (var i = 0; i < condition; i++) {
+        var tmp = this.at(i);
+        currentH.data = currentT.data;
+        currentT.data = tmp;
+        currentH = currentH.next
+        currentT = currentT.prev;
+      }
+    }
 
     indexOf(data) {
       var index = 0;
