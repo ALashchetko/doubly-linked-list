@@ -2,7 +2,6 @@ const Node = require('./node');
 
 class LinkedList {
     constructor() {
-      this.data;
       this._head;
       this._tail;
       this.length = 0;
@@ -10,7 +9,7 @@ class LinkedList {
 
     append(data) {
       var current = new Node(data);
-      if (this.length === 0){
+      if (!this.length){
         this._head = this._tail = current;
       }
       else {
@@ -19,13 +18,16 @@ class LinkedList {
         this._tail = current;
       }
       this.length++;
+      //return this;
     }
 
     head() {
+      if(!this._head) return null;
       return this._head.data;
     }
 
     tail() {
+      if(!this._tail) return null;
       return this._tail.data;
     }
 
@@ -50,7 +52,7 @@ class LinkedList {
     }
 
     isEmpty() {
-      if (this.length === 0) return true;
+      if (!this.length) return true;
       else return false;
     }
 
@@ -63,8 +65,7 @@ class LinkedList {
           this.length--;
         }
         this.length--;
-        this._head.data = null;
-        this._tail.data = null;
+        this._head = this._tail = null;
       }
     }
 
@@ -83,8 +84,11 @@ class LinkedList {
 
     reverse() {
       var condition;
-      if (this.length % 2 === 0) condition = (this.length - 1) / 2;
-      else condition = Math.floor((this.length - 1) / 2)
+      if (this.length === 0) return;
+      else if (this.length % 2 === 0) condition = (this.length - 1) / 2;
+      else {
+          condition = Math.floor((this.length - 1) / 2);
+      }
 
       var currentH = this._head;
       var currentT = this._tail;
