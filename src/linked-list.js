@@ -18,7 +18,7 @@ class LinkedList {
         this._tail = current;
       }
       this.length++;
-      //return this;
+      return this;
     }
 
     head() {
@@ -42,6 +42,10 @@ class LinkedList {
     }
 
     insertAt(index, data) {
+      if(this.length === 0) {
+        this.append(data);
+        return this;
+      }
       var current = this._head;
       var tmpIndex = 0;
       while (index != tmpIndex) {
@@ -67,24 +71,33 @@ class LinkedList {
         this.length--;
         this._head = this._tail = null;
       }
+      return this;
     }
 
     deleteAt(index) {
       var current = this._head;
-      var tmpIndex = 0;
-      while (index != tmpIndex)
-      {
-        current = current.next;
-        tmpIndex++;
+      if (this.length === 0) return this;
+      else if (this.length === 1) {
+        this._head = this._tail = null;
+        return this;
       }
-      current.prev.next = current.next;
-      current.next.prev = current.prev;
-      this.length--;
+      else {
+        var tmpIndex = 0;
+        while (index != tmpIndex)
+        {
+          current = current.next;
+          tmpIndex++;
+        }
+        current.prev.next = current.next;
+        current.next.prev = current.prev;
+        this.length--;
+        return this;
+      }
     }
 
     reverse() {
       var condition;
-      if (this.length === 0) return;
+      if (this.length === 0 || this.length === 1) return this;
       else if (this.length % 2 === 0) condition = (this.length - 1) / 2;
       else {
           condition = Math.floor((this.length - 1) / 2);
@@ -100,6 +113,7 @@ class LinkedList {
         currentH = currentH.next
         currentT = currentT.prev;
       }
+      return this;
     }
 
     indexOf(data) {
